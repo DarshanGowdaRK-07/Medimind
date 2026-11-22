@@ -1,0 +1,8 @@
+
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Activity, LayoutDashboard, LogOut, Plus, ShieldCheck, MessageCircle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+export default function Layout({children}) {
+ const {user,logout}=useAuth(); const navigate=useNavigate();
+ return <div className="app-shell"><aside className="sidebar"><div className="brand"><div className="brand-mark"><Activity size={21}/></div><span>Medi<span className="brand-accent">Mind</span></span></div><div className="side-label">WORKSPACE</div><nav><NavLink to="/" end><LayoutDashboard size={18}/> Overview</NavLink><NavLink to="/upload"><Plus size={18}/> New analysis</NavLink><NavLink to="/health-chat"><MessageCircle size={18}/> Health chat</NavLink></nav><div className="sidebar-bottom"><div className="privacy-card"><ShieldCheck size={18}/><div><b>Your data stays local</b><span>Private by design</span></div></div><div className="profile"><div className="avatar">{user?.name?.[0]?.toUpperCase()}</div><div className="profile-info"><b>{user?.name}</b><span>{user?.email}</span></div><button className="icon-btn" title="Sign out" onClick={()=>{logout();navigate('/login')}}><LogOut size={17}/></button></div></div></aside><main className="main-area"><header className="topbar"><div className="mobile-brand"><Activity size={19}/> MediMind</div><div className="topbar-right"><span className="secure-pill"><span/> Local workspace</span><div className="avatar small">{user?.name?.[0]?.toUpperCase()}</div></div></header><div className="page-content">{children}</div><footer className="footer-note"><ShieldCheck size={14}/> Your reports are processed by your local MediMind server. Not for diagnosis or emergency care.</footer></main></div>
+}
